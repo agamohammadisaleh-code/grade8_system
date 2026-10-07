@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>🎯 سیستم هوشمند هشتم</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@200;400;600;800&display=swap');
+    :root { --gold: #ffd700; --purple: #667eea; --dark: #0f0f1a; --card: rgba(255,255,255,0.06); --text: #f0f0f0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+    html, body { font-family: 'Vazirmatn', Tahoma, Arial, sans-serif; background: var(--dark); color: var(--text); height: 100%; overflow-x: hidden; }
+    body { background-image: radial-gradient(circle at 20% 20%, rgba(102,126,234,0.15) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(255,215,0,0.08) 0%, transparent 40%); background-attachment: fixed; }
+
+    /* Header */
+    .header { padding: 28px 20px 12px; text-align: center; position: relative; }
+    .header::after { content: ''; position: absolute; bottom: 0; left: 15%; right: 15%; height: 1px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent); }
+    .header h1 { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, var(--gold) 0%, #ff6b6b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.02em; }
+    .header p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 6px; }
+    .level-row { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+    .badge { background: linear-gradient(135deg, var(--gold), #e6b800); color: #1a1a2e; padding: 5px 14px; border-radius: 20px; font-weight: 800; font-size: 0.8rem; box-shadow: 0 4px 15px rgba(255,215,0,0.25); }
+    .xp-text { color: var(--gold); font-weight: 700; font-size: 0.95rem; }
+
+    /* XP Bar */
+    .xp-container { max-width: 320px; margin: 14px auto 0; padding: 0 20px; }
+    .xp-label { display: flex; justify-content: space-between; font-size: 0.7rem; color: rgba(255,255,255,0.45); margin-bottom: 6px; }
+    .xp-track { height: 10px; background: rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; box-shadow: inset 0 2px 6px rgba(0,0,0,0.3); }
+    .xp-fill { height: 100%; width: 62%; background: linear-gradient(90deg, #4facfe, #00f2fe, #667eea); border-radius: 10px; position: relative; transition: width 0.8s ease; }
+    .xp-fill::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 30px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.3)); }
+
+    /* Main container */
+    .container { max-width: 460px; margin: 0 auto; padding: 16px 16px 100px; }
+    .card { background: var(--card); border: 1px solid rgba(255,255,255,0.06); border-radius: 22px; padding: 22px; margin-bottom: 16px; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05); transition: transform 0.2s ease; }
+    .card:active { transform: scale(0.995); }
+    .card h2 { font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .card h2 span { font-size: 1.2rem; }
+
+    /* Stats */
+    .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-label { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+    .stat-value { font-weight: 700; font-size: 0.95rem; }
+    .value-good { color: #4ade80; }
+    .value-mid { color: var(--gold); }
+    .value-need { color: #f87171; }
+
+    /* Lesson Card */
+    .lesson-card { background: linear-gradient(135deg, rgba(102,126,234,0.15), rgba(255,105,180,0.08)); border: 1px solid rgba(102,126,234,0.2); }
+    .lesson-card h2 { color: var(--gold); }
+    .lesson-card p { color: rgba(255,255,255,0.65); font-size: 0.88rem; line-height: 1.6; margin: 8px 0 16px; }
+    .btn { display: block; width: 100%; padding: 16px; border: none; border-radius: 14px; font-size: 1.05rem; font-weight: 800; text-align: center; text-decoration: none; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 6px 20px rgba(102,126,234,0.3); letter-spacing: 0.02em; }
+    .btn-primary { background: linear-gradient(135deg, var(--purple), #8b6cf0); color: #fff; }
+    .btn-primary:active { transform: scale(0.97); box-shadow: 0 2px 10px rgba(102,126,234,0.2); }
+
+    /* Question Area */
+    .question-area { display: none; animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .question-area h3 { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
+    .question-text { font-size: 1.15rem; font-weight: 600; line-height: 1.7; margin: 14px 0 20px; }
+    .option-btn { display: block; width: 100%; padding: 14px; margin: 8px 0; border: 2px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: #fff; border-radius: 14px; text-align: right; font-family: inherit; font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+    .option-btn::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--purple); opacity: 0; transition: opacity 0.2s; border-radius: 0 4px 4px 0; }
+    .option-btn:hover { border-color: rgba(102,126,234,0.5); background: rgba(102,126,234,0.1); }
+    .option-btn:active { transform: scale(0.99); }
+    .option-btn.selected { border-color: var(--gold); background: rgba(255,215,0,0.08); }
+    .option-btn.selected::before { opacity: 1; }
+
+    /* Bottom Nav */
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 460px; margin: 0 auto; display: flex; background: rgba(15,15,26,0.85); backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.06); padding: 10px 16px; gap: 10px; z-index: 100; }
+    .nav-btn { flex: 1; padding: 12px 8px; border-radius: 12px; border: none; background: transparent; color: rgba(255,255,255,0.5); font-family: inherit; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center; }
+    .nav-btn.active { color: var(--gold); background: rgba(255,215,0,0.08); }
+    .nav-btn span { display: block; font-size: 1.2rem; margin-bottom: 2px; }
+
+    /* Toast */
+    .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px); background: linear-gradient(135deg, #2ecc71, #27ae60); color: #fff; padding: 14px 24px; border-radius: 14px; font-weight: 700; box-shadow: 0 10px 30px rgba(46,204,113,0.3); z-index: 200; transition: transform 0.35s ease; font-size: 0.95rem; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.error { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+
+    /* Progress bar for chapter */
+    .chapter-bar { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; margin-top: 12px; }
+    .chapter-fill { height: 100%; width: 45%; background: linear-gradient(90deg, var(--purple), var(--gold)); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>🎯 سیستم هوشمند هشتم</h1>
+    <p>یادگیری تطبیقی و شخصی‌ساز بر اساس آزمون تشخیصی</p>
+    <div class="level-row">
+      <span class="badge">سطح ۱۲</span>
+      <span class="xp-text">۸,۲۳۰ XP</span>
+    </div>
+    <div class="xp-container">
+      <div class="xp-label"><span>تا سطح بعد</span><span>۲,۰۷۰ XP باقی</span></div>
+      <div class="xp-track"><div class="xp-fill" style="width: 62%;"></div></div>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <!-- Progress Card -->
+    <section class="card" aria-label="پیشرفت امروز">
+      <h2><span>📊</span> پیشرفت دروس</h2>
+      <div class="stat-row"><span class="stat-label">ریاضی</span> <span class="stat-value value-good">۷۸٪</span></div>
+      <div class="stat-row"><span class="stat-label">علوم تجربی</span> <span class="stat-value value-mid">۶۵٪</span></div>
+      <div class="stat-row"><span class="stat-label">فارسی</span> <span class="stat-value value-good">۹۱٪</span></div>
+      <div class="stat-row"><span class="stat-label">عربی</span> <span class="stat-value value-mid">۷۲٪</span></div>
+      <div class="stat-row"><span class="stat-label">انگلیسی</span> <span class="stat-value value-need">۴۸٪</span></div>
+      <div class="stat-row"><span class="stat-label">زنجیره مطالعه</span> <span class="stat-value value-good">🔥 ۷ روز متوالی</span></div>
+    </section>
+
+    <!-- Recommended Lesson -->
+    <section class="card lesson-card" aria-label="درس پیشنهادی">
+      <h2><span>📚</span> درس پیشنهادی امروز</h2>
+      <h3 style="color:#fff; font-size:1.1rem; margin-bottom:4px;">علوم تجربی — فصل ۲</h3>
+      <p>نیرو و حرکت (سطح ۲)<br>بر اساس آزمون تشخیصی شما، این درس نیاز به تمرین دارد. با تکمیل آن ۲۰ XP و نشان «مغز علوم» دریافت می‌کنید.</p>
+      <div class="chapter-bar"><div class="chapter-fill"></div></div>
+      <a href="#" class="btn btn-primary" onclick="startLesson(event)">شروع درس تطبیقی</a>
+    </section>
+
+    <!-- Daily Challenge -->
+    <section class="card" aria-label="چالش روزانه">
+      <h2><span>⚡</span> چالش روزانه</h2>
+      <p style="color:rgba(255,255,255,0.6); font-size:0.85rem; margin-bottom:12px;">۳ سؤال سطح بالا در ۵ دقیقه — ۵۰ XP اضافی</p>
+      <a href="#" class="btn btn-primary" onclick="startChallenge(event)">ورود به چالش</a>
+    </section>
+
+    <!-- Question Area -->
+    <section class="card question-area" id="questionArea" aria-label="سؤال فعلی">
+      <h3>سؤال تطبیقی — سطح ۲</h3>
+      <p class="question-text">کدام قانون نیوتن به مفهوم اینرسی (تمایل جسم برای حفظ حالت خود) اشاره دارد؟</p>
+      <button class="option-btn" onclick="selectAnswer('A', this)">الف) قانون اول نیوتن</button>
+      <button class="option-btn" onclick="selectAnswer('B', this)">ب) قانون دوم نیوتن (F = ma)</button>
+      <button class="option-btn" onclick="selectAnswer('C', this)">ج) قانون سوم نیوتن</button>
+      <button class="option-btn" onclick="selectAnswer('D', this)">د) قانون جهانی گرانش</button>
+    </section>
+
+    <!-- Recent Badges -->
+    <section class="card" aria-label="نشان‌های اخیر">
+      <h2><span>🏅</span> نشان‌های شما</h2>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <span style="background:rgba(255,215,0,0.15); color:var(--gold); padding:6px 12px; border-radius:20px; font-size:0.75rem; font-weight:700; border:1px solid rgba(255,215,0,0.2);">🏅 شروع قوی</span>
+        <span style="background:rgba(102,126,234,0.15); color:#a5b4fc; padding:6px 12px; border-radius:20px; font-size:0.75rem; font-weight:700; border:1px solid rgba(102,126,234,0.2);">🔥 زنجیره ۷ روزه</span>
+        <span style="background:rgba(255,105,180,0.15); color:#f9a8d4; padding:6px 12px; border-radius:20px; font-size:0.75rem; font-weight:700; border:1px solid rgba(255,105,180,0.2);">🧠 مغز ریاضی</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav" aria-label="منوی اصلی">
+    <button class="nav-btn active" onclick="showTab('home', this)"><span>🏠</span> داشبورد</button>
+    <button class="nav-btn" onclick="showTab('learn', this)"><span>📚</span> درس‌ها</button>
+    <button class="nav-btn" onclick="showTab('challenge', this)"><span>⚡</span> چالش</button>
+    <button class="nav-btn" onclick="showTab('profile', this)"><span>👤</span> پروفایل</button>
+  </nav>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // متغیر API — در گام ۴ جایگزین شود
+    const API_URL = 'https://script.google.com/macros/s/YOUR_DEPLOY_ID/exec';
+    const STUDENT_ID = 'STU-001';
+
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.className = 'toast show ' + (isError ? 'error' : '');
+      setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    function startLesson(e) {
+      if (e) e.preventDefault();
+      document.getElementById('questionArea').style.display = 'block';
+      document.getElementById('questionArea').scrollIntoView({behavior: 'smooth', block: 'center'});
+      showToast('درس تطبیقی بارگذاری شد! پاسخ دهید تا XP دریافت کنید.', false);
+    }
+
+    function startChallenge(e) {
+      if (e) e.preventDefault();
+      showToast('چالش روزانه شروع شد! ۳ سؤال در ۵ دقیقه!', false);
+      startLesson(e);
+    }
+
+    function selectAnswer(opt, btn) {
+      // حذف انتخاب قبلی
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+
+      // ارسال به API (در نسخه واقعی با fetch)
+      showToast('در حال بررسی پاسخ...');
+      setTimeout(() => {
+        // شبیه‌سازی پاسخ API
+        const isCorrect = opt === 'A'; // نمونه
+        if (isCorrect) {
+          showToast('+۲۰ XP! پاسخ صحیح بود. سطح شما افزایش یافت!', false);
+        } else {
+          showToast('پاسخ اشتباه بود. راهنما نمایش داده می‌شود.', true);
+        }
+        // بازنشانی پس از ۲.۵ ثانیه
+        setTimeout(() => {
+          btn.classList.remove('selected');
+          document.getElementById('questionArea').style.display = 'none';
+        }, 2500);
+      }, 600);
+    }
+
+    function showTab(name, btn) {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (name === 'profile') showToast('پروفایل شما: سطح ۱۲ — ۸,۲۳۰ XP', false);
+      else if (name === 'challenge') startChallenge();
+      else if (name === 'learn') startLesson();
+    }
+
+    // ثبت Service Worker برای PWA (ساده)
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a46f586d3968d2b6',t:'MTc5MTQwMTY4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

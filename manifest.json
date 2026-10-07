@@ -1,0 +1,46 @@
+{
+  "name": "سیستم هوشمند هشتم",
+  "short_name": "هوشمند ۸",
+  "description": "سیستم آموزشی تطبیقی و هوشمند برای پایه هشتم متوسطه اول با آزمون تشخیصی، موتور یادگیری شخصی و سیستم انگیزشی XP.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0f0f1a",
+  "theme_color": "#667eea",
+  "categories": ["education", "productivity"],
+  "related_applications": [],
+  "orientation": "portrait",
+  "dir": "rtl",
+  "lang": "fa",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "درس جدید",
+      "short_name": "درس",
+      "description": "شروع درس تطبیقی پیشنهادی",
+      "url": "/index.html#lesson",
+      "icons": [{"src":"icon-192.png","sizes":"192x192"}]
+    },
+    {
+      "name": "چالش روزانه",
+      "short_name": "چالش",
+      "description": "ورود به چالش روزانه",
+      "url": "/index.html#challenge",
+      "icons": [{"src":"icon-192.png","sizes":"192x192"}]
+    }
+  ]
+}
